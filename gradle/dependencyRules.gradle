@@ -35,7 +35,8 @@ configurations.all { configuration ->
   incoming.afterResolve {
     it.resolutionResult.allDependencies {
       if (it instanceof ResolvedDependencyResult) {
-        if (configuration.name != "codenarc" && it.selected.moduleVersion.group == "org.codehaus.groovy" && it.selected.moduleVersion.name == "groovy") {
+        if (configuration.name != "codenarc" && it.selected.moduleVersion.group == "org.codehaus.groovy"
+          && it.selected.moduleVersion.name == "groovy" && it.selected.moduleVersion.version != commonVersions.groovy) {
           throw new InvalidUserDataException("groovy in dependency graph of $configuration.name of project $project.name")
         }
       }

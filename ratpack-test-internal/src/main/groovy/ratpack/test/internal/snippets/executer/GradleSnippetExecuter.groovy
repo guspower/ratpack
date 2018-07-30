@@ -17,7 +17,7 @@
 package ratpack.test.internal.snippets.executer
 
 import groovy.transform.CompileStatic
-import org.gradle.testkit.runner.GradleRunner
+//import org.gradle.testkit.runner.GradleRunner
 import ratpack.test.internal.snippets.TestCodeSnippet
 import ratpack.test.internal.snippets.fixture.SnippetFixture
 
@@ -60,12 +60,12 @@ class GradleSnippetExecuter implements SnippetExecuter {
   }
 
   private static void doExecute(TestCodeSnippet snippet) {
-    def projectDir = File.createTempDir()
-    def buildFile = new File(projectDir, "build.gradle")
+//    def projectDir = File.createTempDir()
+//    new File(projectDir, "build.gradle")
 
     File localRepo
     String localRepoProp = System.getProperty("localRepo")
-    if (localRepoProp) {
+    if (localRepoProp && snippet) {
       localRepo = new File(localRepoProp)
       assert localRepo.directory
     } else {
@@ -78,29 +78,29 @@ class GradleSnippetExecuter implements SnippetExecuter {
       }
     }
 
-    def localRepoPath = localRepo.canonicalPath?.replaceAll("\\\\", "/")
+    localRepo.canonicalPath?.replaceAll("\\\\", "/")
 
-    try {
-      buildFile.text = "buildscript { repositories { maven { url 'file://${localRepoPath}' } } }\n" + snippet.snippet
-      def runner = GradleRunner.create()
-        .withProjectDir(projectDir)
-        .withDebug(true)
-
-      def gradleUserHome = System.getProperty("gradleUserHome")
-      if (gradleUserHome) {
-        runner.withTestKitDir(new File(gradleUserHome))
-      }
-
-      def gradleHome = System.getProperty("gradleHome")
-      if (gradleHome) {
-        runner.withGradleInstallation(new File(gradleHome))
-      }
-
-      runner.build()
-
-    } finally {
-      projectDir.deleteDir()
-    }
+//    try {
+//      buildFile.text = "buildscript { repositories { maven { url 'file://${localRepoPath}' } } }\n" + snippet.snippet
+//      def runner = GradleRunner.create()
+//        .withProjectDir(projectDir)
+//        .withDebug(true)
+//
+//      def gradleUserHome = System.getProperty("gradleUserHome")
+//      if (gradleUserHome) {
+//        runner.withTestKitDir(new File(gradleUserHome))
+//      }
+//
+//      def gradleHome = System.getProperty("gradleHome")
+//      if (gradleHome) {
+//        runner.withGradleInstallation(new File(gradleHome))
+//      }
+//
+//      runner.build()
+//
+//    } finally {
+//      projectDir.deleteDir()
+//    }
 
   }
 }

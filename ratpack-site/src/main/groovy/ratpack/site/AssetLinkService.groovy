@@ -29,7 +29,7 @@ class AssetLinkService {
 
   String getAt(String path) {
   	final Properties manifest = AssetPipelineConfigHolder.manifest
-    final String manifestPath = path.startsWith("/") ? path.substring(1) : path
+    String manifestPath = path.startsWith("/") ? path.substring(1) : path
     if(manifest) {
     	manifestPath = manifest.getProperty(manifestPath, manifestPath)
     }
